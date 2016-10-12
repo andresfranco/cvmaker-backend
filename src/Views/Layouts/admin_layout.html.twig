@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block head %}
+        <link rel="stylesheet" href="{{base_path~'node_modules/bootstrap/dist/css/bootstrap.css'}}" />
+
+        <link rel="stylesheet" href="{{base_path~'node_modules/font-awesome/css/font-awesome.min.css'}}" />
+        <link rel="stylesheet" href="{{base_path~'/css/main_layout.css'}}" />
+        <script src="{{base_path~'node_modules/es6-shim/es6-shim.min.js'}}"></script>
+        <script src="{{base_path~'node_modules/zone.js/dist/zone.js'}}"></script>
+        <script src="{{base_path~'node_modules/reflect-metadata/Reflect.js'}}"></script>
+        <script src="{{base_path~'node_modules/systemjs/dist/system.src.js'}}"></script>
+
+
+        <!-- 2. Configure SystemJS -->
+        <script src="{{base_path~'systemjs.config.js'}}"></script>
+        <script src="{{base_path~'node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js'}}"></script>
+        <script>
+            System.import('app').catch(function(err){ console.error(err); });
+        </script>
+        <title>{% block title %}{% endblock %} - {{'EL Curricullum'}}</title>
+    {% endblock %}
+</head>
+<body>
+<my-app>Loading...</my-app>
+</body>
+</html>
