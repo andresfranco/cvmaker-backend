@@ -74,7 +74,7 @@ Class LanguageController extends GeneralController
     try{
       $Language = Language::findOrFail($id); 
       $Language->delete();
-      $result=["error_code"=>$this->response->getStatusCode(),"error_message"=>""];
+      $result=["error_code"=>"0","error_message"=>""];
     }
       catch(ModelNotFoundException $e)
     {
