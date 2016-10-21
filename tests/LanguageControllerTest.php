@@ -70,16 +70,16 @@ Class LanguageControllerTest extends TestsSetup
   }  
  
   
-  public function test_show_action()
+  public function test_edit_action()
   {
 
     // Language found
     $controller = new App\Controller\LanguageController($this->app);
-    $result =json_decode($controller->show($this->test_id['exist_id']),true);
+    $result =json_decode($controller->edit($this->test_id['exist_id']),true);
     $this->assertNotNull($result['code']);
 
     //Language not found
-    $result =json_decode($controller->show($this->test_id['not_exist_id']),true);
+    $result =json_decode($controller->edit($this->test_id['not_exist_id']),true);
     $this->assertEquals("1",$result['error_code']);
 
   }  
@@ -127,8 +127,6 @@ Class LanguageControllerTest extends TestsSetup
 
     $this->validate_route_code( ['GET','PUT','DELETE'],$this->main_route.'/create_language',$this->invalid_route_code );
 
-    $this->validate_route_code( ['POST','PUT','DELETE'],$this->main_route.'/show/{id}',$this->invalid_route_code );
-
     $this->validate_route_code( ['POST','PUT','DELETE'],$this->main_route.'/edit/{id}',$this->invalid_route_code );
 
     $this->validate_route_code( ['POST','GET','DELETE'],$this->main_route.'/update/{id}',$this->invalid_route_code );
@@ -143,8 +141,6 @@ Class LanguageControllerTest extends TestsSetup
     $this->validate_route_code( ['GET'],$this->main_route.'/get_all_languages',$this->valid_route_code );
 
     $this->validate_route_code( ['POST'],$this->main_route.'/create_language',$this->valid_route_code);
-
-    $this->validate_route_code( ['GET'],$this->main_route.'/show/{id}',$this->valid_route_code );
 
     $this->validate_route_code( ['GET'],$this->main_route.'/edit/{id}',$this->valid_route_code );
 

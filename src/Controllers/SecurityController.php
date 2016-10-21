@@ -24,30 +24,17 @@ Class SecurityController extends GeneralController
   {
     try
     {
-      $user= User::where('email',$email)->firstOrFail();
-      $user_data =["email"=>$user->email,"salt"=>$user->salt,"password"=>$user->password,"name"=>$user->name,"lastname"=>$user->lastname];
-      $result=["error_code"=>$this->response->getStatusCode(),"error_message"=>"","user_data"=> $user_data ]; 
+      $user= User::where('email',$email)->orWhere('user_name',$email)->firstOrFail();
+      $user_data =["email"=>$user->email,"salt"=>$user->salt,"password"=>$user->password,"username"=>$user->user_name,"name"=>$user->name,"lastname"=>$user->lastname];
+      $result=["error_code"=>"0","error_message"=>"","user_data"=> $user_data ]; 
     }
     catch (ModelNotFoundException $e) 
     {
       $result =["error_code"=>"1","error_message"=>"User not found"];
-    }  
+    }
     return $result;
   }
 
-  public function validate_user_email($email)
-  {  
-    try
-    {
-      $user= User::where('email',$email)->firstOrFail();
-      $result=["error_code"=>"0","error_message"=>"valid email"]; 
-    }
-    catch (ModelNotFoundException $e)
-    {
-      $result =["error_code"=>"1","error_message"=>"User not found"];
-    }  
-    return $result;
-  }
 
   
   public function validate_password($email,$password)
@@ -55,28 +42,33 @@ Class SecurityController extends GeneralController
     $values= $this->request->getParsedBody();
     $email =$values['email'];
     $password =$values['password'];
-    $validate_email= $this->validate_user_email($email);
+    $data  = $this->get_user_data($email);
 
-    if ($validate_email['error_code'] =="0")
+    if ($data['error_code'] =="0")
     {
-      $data  = $this->get_user_data($email);
       $user_data =$data['user_data'];
       $passwordhash = hash('sha256', $userdata['salt'] . hash('sha256', $password) );
 
       if($passwordhash != $user_data ["password"]) //incorrect password
       {
-      $result =["error_code"=>"1","error_message"=>'invalid password'] ;
+        $result =["error_code"=>"1","error_message"=>"invalid password"] ;
       }
       else //valid password
       {
-      $result =["error_code"=>"0","error_message"=>"valid authentication",'username'=>$user_data ["name"].' '.$user_data ["lastname"]] ;
+        $result =["error_code"=>"0","error_message"=>"valid authentication","user_data"=>["username"=>$user_data["username"],"name"=>$user_data["name"],"lastname"=>$user_data["lastname"],"email"=>$user_data["email"]]];
       }    
     }
     else
     {
-      $result =["error_code"=>$validate_email['error_code'],"error_message"=>$validate_email['error_message']] ;
+      $result =["error_code"=>$data['error_code'],"error_message"=>$data['error_message']] ;
     }
     return json_encode($result);
-    }
+  }
   
+  public function get_current_user(array $user_data)
+  {
+    $this->user_data =$user_data;
+    return $this->user_data;
+  }
+
 }

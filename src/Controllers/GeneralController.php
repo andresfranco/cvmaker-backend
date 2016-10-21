@@ -23,5 +23,6 @@ class GeneralController extends  Controller
     $result =['error_code'=>$error_code,'error_message'=>$error_message];
     return $result;
   }
+  
     
 }

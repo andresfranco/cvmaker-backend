@@ -43,11 +43,6 @@ Class LanguageController extends GeneralController
     return json_encode($result);
   }
     
-  public function show($id)
-  {
-    return $this->get_language_byid($id);
-  }
-
   public function edit($id)
   {
     return $this->get_language_byid($id);

@@ -25,6 +25,7 @@ Class UserController extends SecurityController
         $user = new User;
         $user->email =$values['email']; 
         $user->password =$password_hash;
+        $user->user_name =$values['username'];
         $user->name =$values['name'];
         $user->lastname =$values['lastname'];
         $user->salt =$salt;
