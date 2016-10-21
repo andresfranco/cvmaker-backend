@@ -20,33 +20,34 @@ Class LanguageController extends GeneralController
       $language = new Language;
       $language->code =$values['code']; 
       $language->language =$values['language'];
+      $language->flag =$values['flag'];
       $language->createuser ='admin';
       $language->modifyuser ='admin';
       $language->save();
       $result =["error_code"=>$this->response->getStatusCode(),"error_message"=>""];
     }
     catch(\Illuminate\Database\QueryException $e){
-      $result =["error_code"=>"1","error_message"=> $e->getMessage()];
+     $result =["error_code"=>"1","error_message"=> $e->getMessage()];
     } 
     return json_encode($result);
   }
 
   public function get_language_byid($id)
   {
-  try { 
-    $result = Language::findOrFail($id);
-  } 
-  catch (ModelNotFoundException $e){
-    $result =["error_code"=>"1","error_message"=>"Item not found"];
-  } 
-  return json_encode($result);
+    try { 
+      $result = Language::findOrFail($id);
+    } 
+    catch (ModelNotFoundException $e){
+      $result =["error_code"=>"1","error_message"=>"Item not found"];
+    } 
+    return json_encode($result);
   }
     
   public function show($id)
   {
     return $this->get_language_byid($id);
   }
-  
+
   public function edit($id)
   {
     return $this->get_language_byid($id);
@@ -58,11 +59,12 @@ Class LanguageController extends GeneralController
       $language = Language::findOrFail($id);
       $language->code =$values['code']; 
       $language->language =$values['language'];
+      $language->flag =$values['flag'];
       $language->modifyuser ='admin';
       $language->save(); 
       $result=["error_code"=>$this->response->getStatusCode(),"error_message"=>""];
     } 
-    catch (ModelNotFoundException $e) 
+      catch (ModelNotFoundException $e) 
     {
       $result =["error_code"=>"1","error_message"=>"Item not found"];
     }  
@@ -71,12 +73,13 @@ Class LanguageController extends GeneralController
   
   public function destroy($id)
   {   
-    try{
+    try
+    {
       $Language = Language::findOrFail($id); 
       $Language->delete();
       $result=["error_code"=>"0","error_message"=>""];
     }
-      catch(ModelNotFoundException $e)
+    catch(ModelNotFoundException $e)
     {
       $result=["error_code"=>"1","error_message"=>"Item not found"];
     }

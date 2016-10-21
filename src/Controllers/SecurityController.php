@@ -20,10 +20,10 @@ Class SecurityController extends GeneralController
     return $hashpassword;
   }
   
-  
   function get_user_data($email)
   {
-    try{
+    try
+    {
       $user= User::where('email',$email)->firstOrFail();
       $user_data =["email"=>$user->email,"salt"=>$user->salt,"password"=>$user->password,"name"=>$user->name,"lastname"=>$user->lastname];
       $result=["error_code"=>$this->response->getStatusCode(),"error_message"=>"","user_data"=> $user_data ]; 
@@ -37,16 +37,18 @@ Class SecurityController extends GeneralController
 
   public function validate_user_email($email)
   {  
-    try{
+    try
+    {
       $user= User::where('email',$email)->firstOrFail();
       $result=["error_code"=>"0","error_message"=>"valid email"]; 
     }
-    catch (ModelNotFoundException $e){
+    catch (ModelNotFoundException $e)
+    {
       $result =["error_code"=>"1","error_message"=>"User not found"];
     }  
     return $result;
   }
-  
+
   
   public function validate_password($email,$password)
   {   
@@ -63,11 +65,11 @@ Class SecurityController extends GeneralController
 
       if($passwordhash != $user_data ["password"]) //incorrect password
       {
-        $result =["error_code"=>"1","error_message"=>'invalid password'] ;
+      $result =["error_code"=>"1","error_message"=>'invalid password'] ;
       }
       else //valid password
       {
-        $result =["error_code"=>"0","error_message"=>"valid authentication",'username'=>$user_data ["name"].' '.$user_data ["lastname"]] ;
+      $result =["error_code"=>"0","error_message"=>"valid authentication",'username'=>$user_data ["name"].' '.$user_data ["lastname"]] ;
       }    
     }
     else
@@ -75,6 +77,6 @@ Class SecurityController extends GeneralController
       $result =["error_code"=>$validate_email['error_code'],"error_message"=>$validate_email['error_message']] ;
     }
     return json_encode($result);
-  }
+    }
   
 }

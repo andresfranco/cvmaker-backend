@@ -20,8 +20,8 @@ class GeneralController extends  Controller
       $error_code=1;
       $error_message="invalid email";
     }
-      $result =['error_code'=>$error_code,'error_message'=>$error_message];
-      return $result;
+    $result =['error_code'=>$error_code,'error_message'=>$error_message];
+    return $result;
   }
     
 }

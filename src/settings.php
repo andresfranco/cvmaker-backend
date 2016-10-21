@@ -1,8 +1,11 @@
 <?php
-return [
-  'settings' => [
+return 
+[
+  'settings' => 
+  [
     'displayErrorDetails' => true, 
-    'db' => [
+    'db' =>
+    [
       // Eloquent configuration
       'driver'    => 'mysql',
       'host'      => 'localhost',
@@ -14,13 +17,15 @@ return [
       'prefix'    => ''
     ],// set to false in production
     // Renderer settings
-    'renderer' => [
+    'renderer' =>
+    [
       'template_path' => __DIR__ . '/../templates/',
     ],
     // Monolog settings
-    'logger' => [
-      'name' => 'slim-app',
-      'path' => __DIR__ . '/../logs/app.log',
+    'logger' => 
+    [
+    'name' => 'slim-app',
+    'path' => __DIR__ . '/../logs/app.log',
     ],
   ],
 ];

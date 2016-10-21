@@ -42,14 +42,14 @@ Class LanguageControllerTest extends TestsSetup
   public function test_create_action()
   {
     //Dont create a language null values.
-    $this->dispatch('/languages/create_language','POST',['code'=>null,'language'=>null]);
+    $this->dispatch('/languages/create_language','POST',['code'=>null,'language'=>null,'flag'=>null]);
     $this->assertEquals(200,$this->response->getStatusCode());    
 
 
     /*WARNING: this test create  data form data base usign the $this->test_id['update_id'] value
     Create language test 
     ------------------Uncomment this for test insert data -----------------------------------------------
-    //$this->dispatch('/languages/create_language','POST',['code'=>'unit_test','language'=>'unit_test']);
+    //$this->dispatch('/languages/create_language','POST',['code'=>'unit_test','language'=>'unit_test','flag'=>'flag.png']);
     //$this->assertEquals(200,$this->response->getStatusCode()); 
     -----------------------------------------------------------------------------------------------------
     */
@@ -89,13 +89,13 @@ Class LanguageControllerTest extends TestsSetup
 
   //Update empty values 
     try{
-      $this->dispatch('/languages/update/'.$this->test_id['not_exist_id'] ,'PUT',['code'=>null,'language'=>null]);
+      $this->dispatch('/languages/update/'.$this->test_id['not_exist_id'] ,'PUT',['code'=>null,'language'=>null,'flag'=>null]);
     } catch (PDOException $e){
       $this->assertNotNull($e->getCode());
     }
   /*WARNING: this test update data form data base usign the $this->test_id['update_id'] value
   ------------------Uncomment this for test update data -----------------------------------------------
-  //$this->dispatch('/languages/update/'.$this->test_id['update_id'] ,'PUT',['code'=>'upd_test','language'=>'upd_test']);
+  //$this->dispatch('/languages/update/'.$this->test_id['update_id'] ,'PUT',['code'=>'upd_test','language'=>'upd_test','flag'=>'flagupd.png']);
   //$this->assertEquals(200,$this->response->getStatusCode());
   ------------------------------------------------------------------------------------------------------
   */
